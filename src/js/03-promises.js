@@ -47,7 +47,6 @@ function handleSubmit(event) {
       .catch(({ position, delay }) => {
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
       });
-
     promises.push(promise);
   }
   Promise.all(promises)
