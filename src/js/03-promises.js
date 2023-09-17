@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const form = document.querySelector('.form');
 const firstDelay = document.querySelector('input[name="delay"]');
 const stepDelay = document.querySelector('input[name="step"]');
@@ -45,6 +47,7 @@ function handleSubmit(event) {
         console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
+         Notify.failure(`Rejected initial promise ${position} in ${delay}ms`);
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
       });
     promises.push(promise);
@@ -54,6 +57,7 @@ function handleSubmit(event) {
       console.log("All promises have settled!");
     })
     .catch((error) => {
+      Notify.failure(`Rejected promise ${position} in ${delay}ms`);
       console.error("Error in Promise.all:", error);
     });
 }

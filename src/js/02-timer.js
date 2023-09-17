@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const inputElement = document.querySelector("#datetime-picker");
 const startButton = document.querySelector('[data-start]');
@@ -8,7 +9,7 @@ const currentDate = Date.now();
 let targetDate = null;
 let countdownInterval = null;
 
-startButton.disabled = false;
+startButton.disabled = true;
 inputElement.disabled = false;
 
 const refs = {
@@ -38,7 +39,7 @@ function convertMs(ms) {
 }
 
 flatpickr(inputElement, {
-
+    
     enableTime: true,
     time_24hr: true,
     defaultDate: Date.now(),
@@ -52,13 +53,14 @@ flatpickr(inputElement, {
             startButton.disabled = false;
             targetDate = selectedDate;
         } else {
+            Notify.warning(`Warning! The date is in the past`),
             startButton.disabled = true;
         }
     }
 });
 
 startButton.addEventListener("click", () => { 
-
+    startButton.disabled = false;
     const timeRemaining = targetDate - Date.now();
     const countdown = convertMs(timeRemaining);
     console.log(countdown);
